@@ -1,8 +1,8 @@
 {
-  "name": "App Scaffold",
+  "name": "Training Tickets Creator",
   "author": {
-    "name": "Zendesk",
-    "email": "support@zendesk.com",
+    "name": "Prateek Chhetri",
+    "email": "pchhetri@zendesk.com",
     "url": "https://www.zendesk.com"
   },
   "defaultLocale": "en",
