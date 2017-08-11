@@ -1,9 +1,9 @@
 import BaseApp from "base_app";
-
+import csvParser from "csv-js"
 // add these if needed
 // import Base64 from 'base64';
 // import helpers from 'helpers';
-
+csvParser.RELAXED = true;
 var App = {
     defaultState: "layout",
 
