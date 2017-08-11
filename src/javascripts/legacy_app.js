@@ -43,10 +43,10 @@ var App = {
         this.requesterEmail = this.$("#inputEmail").val(); //setting requester email from input field
         /*Checking if requesterName and requesterEmail was set*/
         if (this.requesterName.length === 0) {
-            services.notify('Trainer Name is Required!', 'alert', 8000);
+            this.zafClient.invoke('notify', 'Trainer Name is Required!', 'alert', 8000);
             return;
         } else if (this.requesterEmail.length === 0) {
-            services.notify('Trainer Email is Required!', 'alert', 8000);
+            this.zafClient.invoke('notify', 'Trainer Email is Required!', 'alert', 8000);
             return;
         }
         this.productArea = this.$("#selProductArea option:selected").val(); //setting product area from dropdown
@@ -59,7 +59,7 @@ var App = {
     }, //end of getCSVFile
 
     errorGettingCSV: function() {
-        services.notify("Unable to retrieve file!", 'error');
+        this.zafClient.invoke('notify', "Unable to retrieve file!", 'error');
     }, //end of errorGettingCSV
 
     parseCSV: function(data) {
@@ -80,7 +80,7 @@ var App = {
                 .fail(function(jqXHR) {
                     /*Upon failure construct an error message with response code and text*/
                     console.log('Error creating user:\n' + jqXHR.status + ' ' + jqXHR.responseText);
-                    services.notify('Error creating user!', 'error', 8000); // fail error message
+                    this.zafClient.invoke('notify', 'Error creating user!', 'error', 8000); // fail error message
                 });
         }
     }, //end of makeRequester
@@ -109,11 +109,11 @@ var App = {
         }); // end of _.each to iterate over parsedCSV
         /* jshint ignore:start */
         Promise.all(this.promises).then(function(argument) {
-            services.notify('Successfully Created Tickets! :)', 'notice', 8000);
-            this.$('#createTickets').prop('disabled', false);
+            that.zafClient.invoke('notify', 'Successfully Created Tickets! :)', 'notice', 8000);
+            that.$('#createTickets').prop('disabled', false);
         }, function(argument) {
-            services.notify('Error in Creating tickets :(', 'error', 8000);
-            this.$('#createTickets').prop('disabled', false);
+            that.zafClient.invoke('notify', 'Error in Creating tickets :(', 'error', 8000);
+            that.$('#createTickets').prop('disabled', false);
         });
         /* jshint ignore:end */
     }, //end of makeTickets
