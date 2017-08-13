@@ -7,7 +7,7 @@ csvParser.RELAXED = true;
 var App = {
     defaultState: "layout",
 
-    /*global vars*/
+    // global vars
     parsedCSV: null,
     subject: null,
     description: null,
@@ -27,7 +27,7 @@ var App = {
         'searchRequester.done': 'makeRequester'
     }, //end of events
 
-    changeTemplate: function(argument) {
+    changeTemplate: function() {
         this.$('div.progress > div.progress-bar').css({ "width": "0%" });
         var selection = this.$("#selDepartment").val();
         if (selection === "tier1") {
@@ -87,14 +87,14 @@ var App = {
 
     makeTickets: function() {
         this.promises = [];
-        var num = null;
+        this.num = null;
         var that = this; // aliasing this to another var to use inside _.each function
         _.each(this.parsedCSV, function(each, i, l) { //iterate over parsedCSV
             that.num = l.length;
             that.subject = each[0]; //setting subject
             that.description = each[1]; //setting description
             var request = that.ajax('importTicket', that.subject, that.description, that.requesterID) // call to create tickets
-                .done(function(data) {
+                .done(function() {
                     that.counter += 1;
                     var percentComplete = (that.counter / that.num) * 100;
                     console.log('Created a Ticket'); // console logging upon success for debugging
@@ -107,15 +107,13 @@ var App = {
                 }); // end of ajax call to create tickets
             that.promises.push(request);
         }); // end of _.each to iterate over parsedCSV
-        /* jshint ignore:start */
-        Promise.all(this.promises).then(function(argument) {
+        Promise.all(this.promises).then(function() {
             that.zafClient.invoke('notify', 'Successfully Created Tickets! :)', 'notice', 8000);
             that.$('#createTickets').prop('disabled', false);
-        }, function(argument) {
+        }, function() {
             that.zafClient.invoke('notify', 'Error in Creating tickets :(', 'error', 8000);
             that.$('#createTickets').prop('disabled', false);
         });
-        /* jshint ignore:end */
     }, //end of makeTickets
 
     requests: {
